@@ -1,0 +1,57 @@
+﻿Per la creazione del Client (IO.Swagger.SedeASL)
+Utilizzare https://editor.swagger.io 
+caricare il file YAML nell'editor
+Utilizzare la funzione Generate client in alto dal menù selezionando la voce cSharp
+Effettuare il download dello zip 
+Scompattare e aprire la solution
+Cambiare il framework di riferimento ad una versione superiore alla 4.5.2
+Restorare i pacchetti Nuget
+Installare sul progetto Swagger IO .. ( il client) tramite riga di comando del gestore di nuget :
+	PM> Install-Package Microsoft.SourceLink.GitHub -Version 1.0.0-beta2-18618-05
+		come descritto  https://www.nuget.org/packages/Microsoft.SourceLink.GitHub/
+
+Aggiornare i pacchetti Nuget
+
+Creare progetto di Sand Box 
+Aggiungere la referenza al progetto (Proxy client)
+
+utilizzare il client se necessario sovrascrivendo le impostazioni per puntare al servizio Mock :
+            
+			//Impostazioni di configurazione Client
+            IO.Swagger.Client.Configuration mConf = new IO.Swagger.Client.Configuration();
+            mConf.BasePath = "https://572050ca-7cf9-4bf3-a222-964324396089.mock.pstmn.io";
+
+            //istanza CLient
+            AuSedeAslControllerApi instance = new AuSedeAslControllerApi(mConf);
+            string codiccodiceSede = "123849";
+
+            // Chiamata all client REST
+            List<Telefono> response = instance.EstraiTelefonoUsingGET1(codiccodiceSede);
+
+
+N.B................................................................
+Per la creazione del client andare nelle CodeGenOption dello swaggerHub e specifiacre il Namespace per ogni client altrimenti non si riescono 
+ad utilizzare nello stesso progetto .. ...
+
+
+
+
+
+CREARE UN SERVIZIO MOCK con POSTMAN a partire dal  YAML
+Utilizzare Postman per importare ua collection a partire dai file YAML
+Una volta creata la collection (https://learning.getpostman.com/docs/postman/collections/managing_collections/#edit-and-view-collection-details)
+Creare un Mock service a partire dalla reqeust della collection :
+	https://www.youtube.com/watch?v=pAD11I3k9q0
+
+Definire una response per la chiamata alla collection
+	http://blog.getpostman.com/2017/05/17/mock-responses-in-postman-by-using-examples/
+	Un esempio della response si trova utilizzando lo swagger editor https://editor.swagger.io  :
+	[
+  {
+    "codiceTipoTelefono": "string",
+    "dataMovimentazione": 0,
+    "descrizioneTipoTelefono": "string",
+    "numeroTelefono": "string"
+  }
+]
+

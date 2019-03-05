@@ -1,0 +1,190 @@
+swagger: '2.0'
+info:
+  description: '@project.description@'
+  version: '1.0'
+  title: '@project.name@'
+  contact:
+    name: INAIL
+    url: 'http://www.inail.it'
+  x-domain-info:
+    - version: 1.0.0
+    - artifact: AU-SedeAsl
+    - name: AU-SedeAsl
+    - time: '1546940815000'
+    - group: it.inail.AU-Rest-SedeAsl
+host: sedeasl-au.os-lab.inail.it
+basePath: /
+tags:
+  - name: au-sede-asl-controller
+    description: API servizio AU
+paths:
+  /1.0/au/sedeasl/estrai-indirizzo:
+    get:
+      tags:
+        - au-sede-asl-controller
+      summary: estrai indirizzo
+      operationId: estraiIndirizzoUsingGET_1
+      produces:
+        - application/json;charset=UTF-8
+      parameters:
+        - name: codiceSede
+          in: query
+          description: codiceSede
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Indirizzo'
+      security:
+        - INAIL_API_GATEWAY_JWT: []
+      deprecated: false
+      x-inail-tech-roles: []
+  /1.0/au/sedeasl/estrai-mail:
+    get:
+      tags:
+        - au-sede-asl-controller
+      summary: estrai mail
+      operationId: estraiMailUsingGET_1
+      produces:
+        - application/json;charset=UTF-8
+      parameters:
+        - name: codiceSede
+          in: query
+          description: codiceSede
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Mail'
+      security:
+        - INAIL_API_GATEWAY_JWT: []
+      deprecated: false
+      x-inail-tech-roles: []
+  /1.0/au/sedeasl/estrai-sede-asl:
+    get:
+      tags:
+        - au-sede-asl-controller
+      summary: Ricerca Sede Asl
+      operationId: getSedeAslUsingGET_1
+      produces:
+        - application/json;charset=UTF-8
+      parameters:
+        - name: istatComuneCompetenza
+          in: query
+          description: istatComuneCompetenza
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SedeAsl'
+      security:
+        - INAIL_API_GATEWAY_JWT: []
+      deprecated: false
+      x-inail-tech-roles: []
+  /1.0/au/sedeasl/estrai-telefono:
+    get:
+      tags:
+        - au-sede-asl-controller
+      summary: estrai telefono
+      operationId: estraiTelefonoUsingGET_1
+      produces:
+        - application/json;charset=UTF-8
+      parameters:
+        - name: codiceSede
+          in: query
+          description: codiceSede
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Telefono'
+      security:
+        - INAIL_API_GATEWAY_JWT: []
+      deprecated: false
+      x-inail-tech-roles: []
+securityDefinitions:
+  INAIL_API_GATEWAY_JWT:
+    type: apiKey
+    name: Authorization
+    in: header
+  X-INAIL-DATA:
+    type: apiKey
+    name: X-INAIL-DATA
+    in: header
+definitions:
+  Indirizzo:
+    type: object
+    properties:
+      cap:
+        type: string
+      codiceBelfiore:
+        type: string
+      codiceIstat:
+        type: string
+      dataMovimentazione:
+        type: integer
+        format: int32
+      dug:
+        type: string
+      indirizzoBreve:
+        type: string
+      numeroCivico:
+        type: string
+      siglaProvincia:
+        type: string
+      via:
+        type: string
+    title: Indirizzo
+  Mail:
+    type: object
+    properties:
+      codiceTipoMail:
+        type: string
+      dataMovimentazione:
+        type: integer
+        format: int32
+      descrizioneMail:
+        type: string
+      indirizzoMail:
+        type: string
+    title: Mail
+  SedeAsl:
+    type: object
+    properties:
+      codiceSede:
+        type: string
+      dataInizio:
+        type: integer
+        format: int32
+      descrizione:
+        type: string
+    title: SedeAsl
+  Telefono:
+    type: object
+    properties:
+      codiceTipoTelefono:
+        type: string
+      dataMovimentazione:
+        type: integer
+        format: int32
+      descrizioneTipoTelefono:
+        type: string
+      numeroTelefono:
+        type: string
+    title: Telefono
